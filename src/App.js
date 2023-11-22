@@ -49,7 +49,7 @@ function App() {
 
       <div>
         <div className="col-md-12 d-flex justify-content-center p-5 " >
-          <input type="text" value={crypto} onChange={(e) => setCrypto(e.target.value)} placeholder="Input cryptocurrency" className="w-25 form-control" required />
+          <input type="text" value={crypto} onChange={(e) => setCrypto(e.target.value)} placeholder="Input cryptocurrency" className="w-25 form-control searchBar" required />
           <button onClick={data_fetch} className='btn btn-secondary '>Search</button>
         </div>
       </div>
