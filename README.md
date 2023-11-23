@@ -1,4 +1,4 @@
-Crypto Search Engine
+Crypto Search Engine. <br />
 Welcome to my Crypto Search Engine, your go-to cryptocurrency search engine web app!
 
 Overview
