@@ -36,6 +36,10 @@ function App() {
       .catch(err => console.log(err))
   }
 
+  const changeCase = (e) => {
+    setCrypto(e.target.value.toLowerCase())
+  }
+
   const markup = { __html: desc };
 
   return (
@@ -49,14 +53,14 @@ function App() {
 
       <div>
         <div className="col-md-12 d-flex justify-content-center p-5 " >
-          <input type="text" value={crypto} onChange={(e) => setCrypto(e.target.value)} placeholder="Input cryptocurrency" className="w-25 form-control searchBar" required />
+          <input type="text" value={crypto} onChange={(e) => setCrypto(e.target.value)} onBlur={changeCase} placeholder="Input cryptocurrency" className="w-25 form-control " required />
           <button onClick={data_fetch} className='btn btn-secondary '>Search</button>
         </div>
       </div>
 
       <div className='containerMargin'>
         <div className='col-md-4 p-5   text-center ' /*style={{ backgroundColor: "green" }}*/ >
-          <img src={pic} width="150" className="py-3" /><br />
+          <img src={pic} width="150" className="py-3" alt="" /><br />
           <h1>{name}{symb}</h1><br />
           <h3><a href={lynk}>{lynk}</a></h3><br /><br />
           <h2 style={{ Color: "green[500]" }}>{dollar}</h2><br />
