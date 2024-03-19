@@ -1,11 +1,42 @@
-.searchBar {
-  text-transform: lowercase;
+.frostedGlass {
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.08);
+  opacity: 0.95;
+  backdrop-filter: blur(30px);
+  box-shadow: -1px 1px 10px grey;
+
+}
+
+.frostedGlass2 {
+
+  background-color: rgba(255, 255, 255, 0.08);
+  opacity: 0.7;
+  backdrop-filter: blur(30px);
+  border-style: hidden;
+
 }
 
 
+.fgText {
+  z-index: 1000;
+
+
+}
+
+
+p {
+  font-size: 25px;
+}
+
+.tableCss {
+  padding: 10px;
+  border-spacing: 100px;
+
+}
+
 .gridlines {
   border-collapse: collapse;
-  border: 3px solid black;
+  border: 1px solid black;
 }
 
 .containerMargin {
@@ -15,9 +46,6 @@
 
 }
 
-.containerMarginChild {
-  margin: auto;
-}
 
 
 

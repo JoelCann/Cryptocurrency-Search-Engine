@@ -3,6 +3,10 @@ import React from 'react'
 import { useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
+import background from './assets/White_balls.jpg'
+import { useOnKeyPress } from './Hooks/useOnKeyPress';
+// import ResultPage from './resultspage.js'
+
 
 function App() {
 
@@ -15,71 +19,126 @@ function App() {
   const [euro, setEuro] = useState("")
   const [pound, setPound] = useState("")
   const [desc, setDesc] = useState("")
+  const [ishidden, setIshidden] = useState("true")
 
 
   const data_fetch = () => {
+
+    setIshidden(ishidden === false)
+
     const url = 'https://api.coingecko.com/api/v3/coins/' + crypto;
     axios.get(url)
       .then(result => {
         console.log(result.data)
         const resData = result.data
-        setPic(resData.image.large)
-        setName(resData.name)
-        setSymb(" (" + resData.symbol + ")")
-        setLynk(resData.links.homepage[0])
-        setDollar("Price in Dollars($): " + resData.market_data.current_price.usd)
-        setEuro("Price in Euros(€): " + resData.market_data.current_price.eur)
-        setPound("Price in Pounds(£): " + resData.market_data.current_price.gbp)
-        setDesc(JSON.stringify(resData.description.en))
+        if (crypto === resData.id) {
+          setPic(resData.image.large)
+          setName(resData.name)
+          setSymb(" (" + resData.symbol + ")")
+          setLynk(resData.links.homepage[0])
+          setDollar("Price in Dollars($): " + resData.market_data.current_price.usd)
+          setEuro("Price in Euros(€): " + resData.market_data.current_price.eur)
+          setPound("Price in Pounds(£): " + resData.market_data.current_price.gbp)
+          setDesc(JSON.stringify(resData.description.en))
+        } else return (
+          alert(`Input is not a valid Cryptocurrency`)
+        )
+
 
       })
-      .catch(err => console.log(err))
+      .catch(err => { console.log(err)/*; alert(err)*/ });
+    setCrypto('');
   }
 
   const changeCase = (e) => {
     setCrypto(e.target.value.toLowerCase())
+
   }
 
   const markup = { __html: desc };
 
+
+
+
+
+  // const verifyId = resData.map(data => {
+  //   if (crypto !== data.id) {
+  //     return (
+  //       alert(`Input is not a valid Cryptocurrency`))
+  //   }
+
+  // })
+
+
+  const preview = () => {
+    console.log(ishidden)
+    if (ishidden === false) {
+      return (
+        <React.Fragment>
+          <div>
+            <div className='containerMargin  text-center p-5 '>
+              <div className='col-md-4 p-5 frostedGlass' /*style={{ backgroundColor: "green" }}*/ >
+                <img src={pic} width="150" className="py-3 " alt="" /><br />
+                <h1 >{name}{symb}</h1><br />
+                <br />
+                <p style={{ Color: "green[500]" }}>
+                  {dollar}<br />
+                  {euro}<br />
+                  {pound}
+                </p><br />
+                <p><a href={lynk}>Official Website</a></p>
+              </div>
+            </div>
+
+
+            <div className='row containerMargin container-fluid' >
+              <div className='col-md-8 p-5 text-center py-10 justify-content-center frostedGlass2' >
+                <div style={{ fontWeight: "120px", fontSize: "20px" }} dangerouslySetInnerHTML={markup} />
+              </div>
+            </div>
+          </div>
+
+        </React.Fragment>
+
+      )
+    }
+
+  };
+
+  useOnKeyPress(data_fetch, "Enter");
+
   return (
     <React.Fragment>
-      <div className="App p-4 container-fluid" >
-        <h1 className="title pt-5">Cryptocurrency Search Engine</h1>
-        <h5 className="subHead py-2">Crypto Insights at Your Fingertips: Discover, Learn, Invest Wisely.<br />
-          Your Crypto Journey begins now!
-        </h5>
-      </div>
+      <body>
+        <div className='App' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundAttachment: 'fixed', backgroundSize: "cover", width: "100vw", height: "200vh" }}>
+          <header className="p-5" >
+            <div className="App p-4  container-fluid" >
+              <h1 className="title pt-5">Cryptocurrency Search Engine</h1>
+              <h5 className="subHead py-2">Crypto Insights at Your Fingertips: Discover, Learn, Invest Wisely.<br />
+                Your Crypto Journey begins now!
+              </h5>
+            </div>
 
-      <div>
-        <div className="col-md-12 d-flex justify-content-center p-5 " >
-          <input type="text" value={crypto} onChange={(e) => setCrypto(e.target.value)} onBlur={changeCase} placeholder="Input cryptocurrency" className="w-25 form-control " required />
-          <button onClick={data_fetch} className='btn btn-secondary '>Search</button>
+            <div>
+              <div className="col-md-12 d-flex justify-content-center p-5 " >
+                <input type="search" value={crypto} onChange={(e) => setCrypto(e.target.value)} onBlur={changeCase} placeholder="Input cryptocurrency" className="w-25 form-control " required />
+                <button type="submit" onClick={() => { data_fetch(); }} className='btn btn-secondary '>Search</button >
+              </div>
+            </div>
+            <div >
+              {preview()}
+            </div>
+
+
+
+          </header>
         </div>
-      </div>
-
-      <div className='containerMargin'>
-        <div className='col-md-4 p-5   text-center ' /*style={{ backgroundColor: "green" }}*/ >
-          <img src={pic} width="150" className="py-3" alt="" /><br />
-          <h1>{name}{symb}</h1><br />
-          <h3><a href={lynk}>{lynk}</a></h3><br /><br />
-          <h2 style={{ Color: "green[500]" }}>{dollar}</h2><br />
-          <h2>{euro}</h2><br />
-          <h2>{pound}</h2>
-        </div>
-      </div>
-
-
-      <div className='row containerMargin'  >
-
-
-        <div className='col-md-8 p-5 text-center py-10 justify-content-center ' >
-          <div dangerouslySetInnerHTML={markup} />
-
-        </div>
-      </div>
+      </body>
     </React.Fragment>
   );
+
+
+
 }
 
 export default App;
