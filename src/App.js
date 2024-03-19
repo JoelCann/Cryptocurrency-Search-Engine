@@ -10,6 +10,7 @@ import { useOnKeyPress } from './Hooks/useOnKeyPress';
 
 function App() {
 
+
   const [crypto, setCrypto] = useState('')
   const [pic, setPic] = useState("")
   const [name, setName] = useState("")
@@ -24,14 +25,15 @@ function App() {
 
   const data_fetch = () => {
 
-    setIshidden(ishidden === false)
 
     const url = 'https://api.coingecko.com/api/v3/coins/' + crypto;
     axios.get(url)
       .then(result => {
         console.log(result.data)
         const resData = result.data
+
         if (crypto === resData.id) {
+          setIshidden(ishidden === false)
           setPic(resData.image.large)
           setName(resData.name)
           setSymb(" (" + resData.symbol + ")")
@@ -40,20 +42,18 @@ function App() {
           setEuro("Price in Euros(€): " + resData.market_data.current_price.eur)
           setPound("Price in Pounds(£): " + resData.market_data.current_price.gbp)
           setDesc(JSON.stringify(resData.description.en))
-        } else return (
-          alert(`Input is not a valid Cryptocurrency`)
-        )
-
-
+        }
       })
-      .catch(err => { console.log(err)/*; alert(err)*/ });
+      .catch(err => { console.log(err); alert(err + `\n \n` + `"` + crypto + `"` + `  is not a valid Cryptocurrency \n Please try again!.`) });
     setCrypto('');
   }
+
 
   const changeCase = (e) => {
     setCrypto(e.target.value.toLowerCase())
 
   }
+
 
   const markup = { __html: desc };
 
@@ -100,12 +100,15 @@ function App() {
 
         </React.Fragment>
 
-      )
+      );
+      // setIshidden(ishidden === true);
     }
 
   };
 
+
   useOnKeyPress(data_fetch, "Enter");
+
 
   return (
     <React.Fragment>
@@ -136,9 +139,6 @@ function App() {
       </body>
     </React.Fragment>
   );
-
-
-
 }
 
 export default App;
