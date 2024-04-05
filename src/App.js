@@ -90,7 +90,7 @@ function App() {
   const preview = () => {
     // console.log(ishidden + " (from preview function)")
     // if (ishidden === false) {
-    return (
+    return isVerified ? (
       <React.Fragment>
         <div>
           <div className='containerMargin  text-center p-5 '>
@@ -117,8 +117,7 @@ function App() {
 
 
       </React.Fragment>
-    );
-
+    ) : retNull();
 
     //}
 
@@ -130,7 +129,7 @@ function App() {
 
 
   const displayPreview = () => {
-    setIsVerified(!isVerified);
+    setIsVerified(isVerified);
   }
 
   const retNull = () => {
