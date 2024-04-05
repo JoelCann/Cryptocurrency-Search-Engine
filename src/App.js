@@ -24,7 +24,7 @@ function App() {
 
 
   const data_fetch = () => {
-
+    crypto.toLowerCase();
 
     console.log(crypto);
 
@@ -57,6 +57,10 @@ function App() {
 
         if (err.code === "ERR_NETWORK") {
           alert(err.code + `\n \n` + `Please check your network and try again.`);
+        }
+
+        if (crypto === "") {
+          alert(`Please input a crypto currency in the search bar`);
         }
       });
     setCrypto('');
