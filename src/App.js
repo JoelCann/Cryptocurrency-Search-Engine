@@ -1,11 +1,12 @@
 import './App.css';
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import background from './assets/White_balls.jpg'
 import { useOnKeyPress } from './Hooks/useOnKeyPress';
-// import ResultPage from './resultspage.js'
+import HeaderText from './components/HeaderText';
+import SearchBar from './components/SearchBar';
+import ResultsDisplay from './components/ResultsDisplay.js'
 
 
 function App() {
@@ -24,9 +25,7 @@ function App() {
 
 
   const data_fetch = () => {
-    crypto.toLowerCase();
-
-    console.log(crypto);
+    // changeCase();
 
     const url = 'https://api.coingecko.com/api/v3/coins/' + crypto;
     axios.get(url)
@@ -37,7 +36,7 @@ function App() {
         if (crypto === resData.id) {
 
           setPic(resData.image.large)
-          setName(resData.name)
+          setName(resData.market_data.name)
           setSymb(" (" + resData.symbol + ")")
           setLynk(resData.links.homepage[0])
           setDollar("Price in Dollars($): " + resData.market_data.current_price.usd)
@@ -46,22 +45,26 @@ function App() {
           setDesc(JSON.stringify(resData.description.en))
 
           setIsVerified(!isVerified);
-          preview();
         }
       })
       .catch(err => {
         console.log(err);
-        if (err.code === "ERR_BAD_REQUEST") {
-          alert(err.code + `\n \n` + `"` + crypto + `"` + `  is not a valid Cryptocurrency \n Please try again!.`);
-        };
-
-        if (err.code === "ERR_NETWORK") {
-          alert(err.code + `\n \n` + `Please check your network and try again.`);
-        }
 
         if (crypto === "") {
           alert(`Please input a crypto currency in the search bar`);
         }
+
+        if (err.message === "Request failed with status code 404") {
+          alert(`${err.message}  
+
+          "${crypto}"  is not a valid Cryptocurrency
+          Please try again!.`);
+        }
+
+        if (err.code === "ERR_NETWORK") {
+          alert(err.code + "\n Please check your network and try again.");
+        }
+
       });
     setCrypto('');
   }
@@ -73,119 +76,48 @@ function App() {
 
   }
 
-
   const markup = { __html: desc };
-
-
-
-  // const verifyId = resData.map(data => {
-  //   if (crypto !== data.id) {
-  //     return (
-  //       alert(`Input is not a valid Cryptocurrency`))
-  //   }
-
-  // })
-
-
-  const preview = () => {
-    // console.log(ishidden + " (from preview function)")
-    // if (ishidden === false) {
-    return isVerified ? (
-      <React.Fragment>
-        <div>
-          <div className='containerMargin  text-center p-5 '>
-            <div className='col-md-4 p-5 frostedGlass' >
-              <img src={pic} width="150" className="py-3 " alt="" /><br />
-              <h1 >{name}{symb}</h1><br />
-              <br />
-              <p style={{ Color: "green[500]" }}>
-                {dollar}<br />
-                {euro}<br />
-                {pound}
-              </p><br />
-              <p><a href={lynk}>Official Website</a></p>
-            </div>
-          </div>
-
-
-          <div className='row containerMargin container-fluid' >
-            <div className='col-md-8 p-5 text-center py-10 justify-content-center frostedGlass2' >
-              <div style={{ fontWeight: "120px", fontSize: "20px" }} dangerouslySetInnerHTML={markup} />
-            </div>
-          </div>
-        </div>
-
-
-      </React.Fragment>
-    ) : retNull();
-
-    //}
-
-    // else {
-    //   return null;
-    // }
-  };
-
-
-
-  const displayPreview = () => {
-    setIsVerified(isVerified);
-  }
-
-  const retNull = () => {
-    setIsVerified(!isVerified);
-    return null;
-  }
 
   useOnKeyPress(data_fetch, "Enter");
 
 
   return (
     <React.Fragment>
-      <body>
-        <div className='App' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundAttachment: 'fixed', backgroundSize: "cover", width: "100vw", height: "210vh" }}>
-          <header className="p-5" >
-            <div className="App p-4  container-fluid" >
-              <h1 className="title pt-5">Cryptocurrency Search Engine</h1>
-              <h5 className="subHead py-2">Crypto Insights at Your Fingertips: Discover, Learn, Invest Wisely.<br />
-                Your Crypto Journey begins now!
-              </h5>
-            </div>
+      <div className='App' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundAttachment: 'fixed', backgroundSize: "cover", width: "100vw", height: "210vh" }}>
+        <header className="p-5" >
+          <HeaderText
+            title="Cryptocurrency Search Engine"
+            subtitle={"Crypto Insights at Your Fingertips: Discover, Learn, Invest Wisely." + <br /> +
+              "Your Crypto Journey begins now!"}
+          />
 
-            <div>
-              <div className="col-md-12 d-flex justify-content-center p-5 "  >
-                <input
-                  type="search"
-                  value={crypto}
-                  onChange={(e) => setCrypto(e.target.value)}
-                  onBlur={changeCase}
-                  placeholder="Input cryptocurrency"
-                  className="w-25 form-control "
-                  required
-                />
-                <button
-                  type="submit"
-                  onClick={() => {
-                    data_fetch();
-                    displayPreview();
-                  }
-                  }
-                  className='btn btn-secondary '
-                >
-                  Search
-                </button >
-              </div>
-            </div>
-            <div className="container-fluid">
-              {isVerified ? preview() : null}
-              {/* {preview()} */}
-            </div>
+          <SearchBar
+            inputType="search"
+            inputValue={crypto}
+            changeTrigger={(e) => setCrypto(e.target.value)}
+            blurrTrigger={changeCase}
+            inputPlaceholder="Input cryptocurrency"
 
+            btnType="submit"
+            btnClickTrigger={() => data_fetch()}
+          />
+          <div className="container-fluid">
+            {isVerified &&
+              <ResultsDisplay
+                picSource={pic}
+                coinName={name}
+                coinSymbol={symb}
+                coinPriceDollars={dollar}
+                coinPriceEuros={euro}
+                coinPricePounds={pound}
+                coinInfoLink={lynk}
+                descriptionMarkup={markup}
+              />
+            }
+          </div>
+        </header>
+      </div>
 
-
-          </header>
-        </div>
-      </body>
     </React.Fragment>
   );
 }

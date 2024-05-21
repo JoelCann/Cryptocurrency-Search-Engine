@@ -80,5 +80,7 @@ Technologies Used
 * CSS3
 * JavaScript
 * React.js
+* Axios
+* MUI 
 * Coingecko API for real-time cryptocurrency data.
 
