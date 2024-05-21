@@ -12,7 +12,7 @@ import ResultsDisplay from './components/ResultsDisplay.js'
 function App() {
 
 
-  const [crypto, setCrypto] = useState('')
+
   const [pic, setPic] = useState("")
   const [name, setName] = useState("")
   const [symb, setSymb] = useState("")
@@ -21,13 +21,15 @@ function App() {
   const [euro, setEuro] = useState("")
   const [pound, setPound] = useState("")
   const [desc, setDesc] = useState("")
-  const [isVerified, setIsVerified] = useState(false)
+  const [isVerified, setIsVerified] = useState(false);
 
 
-  const data_fetch = () => {
-    // changeCase();
+  const data_fetch = (crypto) => {
 
-    const url = 'https://api.coingecko.com/api/v3/coins/' + crypto;
+    const transCrypto = crypto.toLowerCase();
+    console.log(transCrypto);
+
+    const url = 'https://api.coingecko.com/api/v3/coins/' + transCrypto;
     axios.get(url)
       .then(result => {
         console.log(result.data)
@@ -66,15 +68,11 @@ function App() {
         }
 
       });
-    setCrypto('');
   }
 
 
-  //a function to convert Users search input to lowercase, as Id's from API are lower cased and case sensitive.
-  const changeCase = (e) => {
-    setCrypto(e.target.value.toLowerCase())
 
-  }
+
 
   const markup = { __html: desc };
 
@@ -85,21 +83,9 @@ function App() {
     <React.Fragment>
       <div className='App' style={{ backgroundImage: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundAttachment: 'fixed', backgroundSize: "cover", width: "100vw", height: "210vh" }}>
         <header className="p-5" >
-          <HeaderText
-            title="Cryptocurrency Search Engine"
-            subtitle={"Crypto Insights at Your Fingertips: Discover, Learn, Invest Wisely." + <br /> +
-              "Your Crypto Journey begins now!"}
-          />
-
+          <HeaderText />
           <SearchBar
-            inputType="search"
-            inputValue={crypto}
-            changeTrigger={(e) => setCrypto(e.target.value)}
-            blurrTrigger={changeCase}
-            inputPlaceholder="Input cryptocurrency"
-
-            btnType="submit"
-            btnClickTrigger={() => data_fetch()}
+            btnClickTrigger={data_fetch}
           />
           <div className="container-fluid">
             {isVerified &&
