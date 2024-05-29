@@ -19,56 +19,51 @@ function SearchBar(props) {
     }
 
 
+    return <div className="col-md-12 justify-content-center p-5 "  >
+        <Box
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 1, width: '50ch' },
+            }}
+            noValidate
+            autoComplete="off"
+        >
+            <TextField
+                id="outlined-basic"
+                label="Input Crypto Currency"
+                size="normal"
+                color="success"
+                variant="outlined"
 
-    return (
-        <div>
-            <div className="col-md-12 d-flex justify-content-center p-5 "  >
-                <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': { m: 1, width: '45ch' },
+                type="search"
+                value={crypto}
+                onChange={(e) => {
+                    setCrypto(e.target.value)
+                    setIstyping(true);
+                }}
+                onBlur={changeCase}
+            // className="w-25 form-control "
+            />
+        </Box>
+        {istyping &&
+            <Zoom in={istyping}>
+                <Button
+                    variant="contained"
+                    size="large"
+
+                    type="submit"
+                    onClick={() => {
+                        props.btnClickTrigger(crypto);
+                        setCrypto("");
                     }}
-                    noValidate
-                    autoComplete="off"
+                    className='btn btn-secondary '
                 >
-                    <TextField
-                        id="outlined-basic"
-                        label="Input Crypto Currency"
-                        size="normal"
-                        color="success"
-                        variant="outlined"
+                    Search
+                </Button>
+            </Zoom>
+        }
+    </div>
 
-                        type="search"
-                        value={crypto}
-                        onChange={(e) => {
-                            setCrypto(e.target.value)
-                            setIstyping(true);
-                        }}
-                        onBlur={changeCase}
-                    // className="w-25 form-control "
-
-                    />
-                </Box>
-                {istyping &&
-                    <Zoom in={istyping}>
-                        <Button
-                            variant="contained"
-                            size="small"
-
-                            type="submit"
-                            onClick={() => {
-                                props.btnClickTrigger(crypto);
-                                setCrypto("");
-                            }}
-                            className='btn btn-secondary '
-                        >
-                            Search
-                        </Button>
-                    </Zoom>
-                }
-            </div>
-        </div>
-    )
 }
 
 export default SearchBar;
