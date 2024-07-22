@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Cryptocurrency-Search-Engine/static/css/main.64d60e0c.css",
+    "main.js": "/Cryptocurrency-Search-Engine/static/js/main.e40bff18.js",
+    "static/js/787.06a11263.chunk.js": "/Cryptocurrency-Search-Engine/static/js/787.06a11263.chunk.js",
+    "static/media/White_balls.jpg": "/Cryptocurrency-Search-Engine/static/media/White_balls.d4feacb4ec8d6ffed871.jpg",
+    "index.html": "/Cryptocurrency-Search-Engine/index.html",
+    "main.64d60e0c.css.map": "/Cryptocurrency-Search-Engine/static/css/main.64d60e0c.css.map",
+    "main.e40bff18.js.map": "/Cryptocurrency-Search-Engine/static/js/main.e40bff18.js.map",
+    "787.06a11263.chunk.js.map": "/Cryptocurrency-Search-Engine/static/js/787.06a11263.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.64d60e0c.css",
+    "static/js/main.e40bff18.js"
+  ]
+}
