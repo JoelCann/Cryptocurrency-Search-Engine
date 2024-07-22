@@ -1,11 +1,11 @@
-Crypto Search Engine. <br />
+# Crypto Search Engine. <br />
 Welcome to my Crypto Search Engine, your go-to cryptocurrency search engine web app!
 
 Overview
-This Crypto Search Engine is a powerful tool designed to help you quickly find information about various (50) cryptocurrencies. Whether you're a trader, investor, or just curious about the world of digital assets, This Crypto Search Engine has got you covered.
+This [Crypto Search Engine]() is a powerful tool designed to help you quickly find information about various (50) cryptocurrencies. Whether you're a trader, investor, or just curious about the world of digital assets, This Crypto Search Engine has got you covered.
 
 
-Cryptocurrencies you can search on:
+# Cryptocurrencies you can search on:
 * 		'bitcoin'
 * 		'ethereum'
 * 		'tether'
@@ -58,13 +58,13 @@ Cryptocurrencies you can search on:
 * 		'the-graph'
 
 
-Features
+# Features
 * Comprehensive Search: Easily search for any cryptocurrency by name.
 * Real-time Data: Get up-to-date information on prices and more.
 * User-friendly Interface: A clean and intuitive design for a seamless user experience.
 
 
-Getting Started
+# Getting Started
 * 		Installation:
     * Clone the repository: git clone https://github.com/JoelCann/Cryptocurrency-Search-Engine.git
     * Navigate to the project folder: cd Crypto-Search-Engine
@@ -75,7 +75,7 @@ Getting Started
     * Simply Enter a cryptocurrency name in the search bar.
     * Explore detailed information about the selected cryptocurrency.
 
-Technologies Used
+# Technologies Used
 * HTML5
 * CSS3
 * JavaScript
